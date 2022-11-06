@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-books
+      author: NAYAKMK
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: books
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: book_pkey
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(250)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: author_name
+                  type: VARCHAR(250)
+              - column:
+                  name: publisher_name
+                  type: VARCHAR(250)
+            tableName: books

@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  liquibase:
+    enabled: false
+  main:
+    web-application-type: SERVLET    
+---
+spring:
+  config:
+    activate:
+      on-profile: init
+  liquibase:
+    enabled: true
+  main:
+    web-application-type: NONE
