@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: liquibase-init-k8s
+  name: spring-app-k8s
   labels:
-    app: liquibase-init-k8s
+    app: spring-app-k8s
 spec:
   selector:
     matchLabels:
-      app: liquibase-init-k8s
+      app: spring-app-k8s
   replicas: 1
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: liquibase-init-k8s
+        app: spring-app-k8s
     spec:
       containers:
-        - name: liquibase-init-k8s-prod
-          image: liquibase-init-k8s
+        - name: spring-app-k8s-prod
+          image: spring-app-k8s
           imagePullPolicy: Never
           env:
             - name: spring.profiles.active
@@ -44,6 +44,14 @@ spec:
         - name: liquibase-init-k8s
           image: liquibase-init-k8s
           imagePullPolicy: Never
-          env:
-            - name: spring.profiles.active
-              value: init
+          # env:
+          #   - name: LIQUIBASE_URL
+          #     value: "jdbc:postgresql://postgresql:5432/docker"
+          #   - name: LIQUIBASE_USERNAME
+          #     value: "postgres"
+          #   - name: LIQUIBASE_PASSWORD
+          #     value: "docker"
+          #   - name: LIQUIBASE_DEFAULT_SCHEMA_NAME
+          #     value: "docker"
+          #   - name: LIQUIBASE_CHANGELOGFILE
+          #     value: "db/changelog-master.yaml"
