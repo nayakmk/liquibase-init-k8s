@@ -1,6 +1,19 @@
-FROM liquibase/liquibase:4.17.2
+FROM alpine:latest
+RUN apk update
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >>       /etc/apk/repositories
+RUN apk add --no-cache liquibase \
+    openjdk17 \ 
+    wget \
+    bash
 
-ADD src/main/resources/db/changelog /liquibase/changelog
-ADD src/main/resources/liquibase.docker.properties /liquibase/changelog
+RUN wget https://jdbc.postgresql.org/download/postgresql-42.5.0.jar
 
-CMD ["sh", "-c", "docker-entrypoint.sh --classpath=/liquibase/changelog --defaultsFile=liquibase.docker.properties update"]
+ADD src/main/resources/db/changelog /liquibase/db/changelog
+ADD src/main/resources/liquibase.properties /liquibase
+ADD liquibase-init.sh /liquibase
+
+WORKDIR /liquibase
+
+# RUN apk add --no-cache --upgrade bash
+
+CMD ["./liquibase-init.sh"]
